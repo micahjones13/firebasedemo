@@ -17,6 +17,7 @@ class CreateProject extends Component {
         e.preventDefault();
         // console.log(this.state);
         this.props.createProject(this.state); // will pass state into createProject and dispatch it, run the function in projectActions with the data in state
+        this.props.history.push('/');
     }
     render() {
         const { auth } = this.props;

@@ -5,8 +5,8 @@ import SignedOutLinks from './SignedOutLinks.js';
 import { connect } from 'react-redux';
 
 const Navbar = (props) => {
-  const { auth } = props; //make sure to destructure this
-  const links = auth.uid ? <SignedInLinks /> : <SignedOutLinks /> //auth.uid only exists if user is signed in. If it does exist, store the <signedinlinks /> component in links. If it doesn't, store signedoutlinks
+  const { auth, profile } = props; //make sure to destructure this
+  const links = auth.uid ? <SignedInLinks profile = {profile} /> : <SignedOutLinks /> //auth.uid only exists if user is signed in. If it does exist, store the <signedinlinks /> component in links. If it doesn't, store signedoutlinks
     return (
       <nav className = 'nav-wrapper grey darken-3'> 
         <div className = 'container'>
@@ -19,7 +19,8 @@ const Navbar = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    auth: state.firebase.auth
+    auth: state.firebase.auth,
+    profile: state.firebase.profile
   }
 }
 
