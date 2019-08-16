@@ -9,7 +9,7 @@ import { Redirect } from 'react-router-dom';
 class Dashboard extends React.Component{
     render(){
         // console.log(this.props);
-        const { projects, auth } = this.props;
+        const { projects, auth, notifications } = this.props;
         if (!auth.uid) return <Redirect to ='/signin' /> //if they aren't logged in, redirect them to sign in page
         return(
             <div className = 'dashboard container'>
@@ -17,7 +17,9 @@ class Dashboard extends React.Component{
                     <div className = 'col s12 m6'>
                     <ProjectList projects = {projects} />
                         <div className = 'col s12 m5 offset-m1'>
-                            <Notifications />
+                            <Notifications
+                                notifications = {notifications}
+                            />
                         </div>
                     </div>
                 </div>
@@ -29,14 +31,17 @@ const mapStateToProps = (state) => {
     console.log(state);
     return {
         projects: state.firestore.ordered.projects, // loads in projects data from firestore db
-        auth: state.firebase.auth 
+        auth: state.firebase.auth,
+        notifications: state.firestore.ordered.notifications //array of notifications, attatching it to props 
     }
 }
 
+
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([
-        { collection: 'projects' } //ok, when this compoonent is active the collection i want to listen to is the project collection. if the project collection changes, this compononet will hear about that and update with current info
+    firestoreConnect([                                                      //order by time, desc order
+        { collection: 'projects', orderBy: ['createdAt', 'desc'] }, {collection: 'notifications', limit: 3, orderBy: ['time', 'desc']} //*ok, when this compoonent is active the collection i want to listen to is the project collection. if the project collection changes, this compononet will hear about that and update with current info. limit notifications to 3
     ])
 )(Dashboard);
+
 
