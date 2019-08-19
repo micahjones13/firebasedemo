@@ -37,3 +37,8 @@ service cloud.firestore {
   - What do you want to use as your public directory? -- NN had us name this dist
   - Configure as single page app? Yes 
   - Done (this creates dist folder, and functions folder)
+
+## Deploying to Firebase
+ - npm run build (this will but the react app inside a build folder )
+ - move build into dist 
+ - run firebase deploy

@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 const Notifications = (props) => {
-    const { notifications } = props;
+    const { notifications } = props; //deconstructing notifications from props
     return(
         <div className = 'section'>
         <div className = 'card z-depth-0'>
